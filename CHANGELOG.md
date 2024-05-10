@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/Bankole2000/validator-utils/compare/v0.0.4...v0.0.5) (2024-05-10)
+
+
+### 🚧 Build
+
+* updated readme, package.json added decorators ([e2356a7](https://github.com/Bankole2000/validator-utils/commits/e2356a713ce10d77aa078c4d4bceb8502aa8e4fd))
+
 ### [0.0.4](https://github.com/Bankole2000/validator-utils/compare/v0.0.3...v0.0.4) (2024-05-01)
 
 
