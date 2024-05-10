@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
+exports.isValidObjectId = exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
 var validators_1 = require("./validators");
 Object.defineProperty(exports, "isOfAge", { enumerable: true, get: function () { return validators_1.isOfAge; } });
 Object.defineProperty(exports, "isBoolean", { enumerable: true, get: function () { return validators_1.isBoolean; } });
@@ -18,3 +18,4 @@ Object.defineProperty(exports, "isValidUserName", { enumerable: true, get: funct
 Object.defineProperty(exports, "onlyOneTruthy", { enumerable: true, get: function () { return validators_1.onlyOneTruthy; } });
 Object.defineProperty(exports, "sanitizeData", { enumerable: true, get: function () { return validators_1.sanitizeData; } });
 Object.defineProperty(exports, "stripHTML", { enumerable: true, get: function () { return validators_1.stripHTML; } });
+Object.defineProperty(exports, "isValidObjectId", { enumerable: true, get: function () { return validators_1.isValidObjectId; } });
