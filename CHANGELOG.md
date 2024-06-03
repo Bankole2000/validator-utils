@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/Bankole2000/validator-utils/compare/v0.0.5...v0.0.6) (2024-06-03)
+
+
+### ✨ Features
+
+* made sanitizer function generic ([bc70392](https://github.com/Bankole2000/validator-utils/commits/bc70392d8949bebaa05832aedc67d24b0766c474))
+
+
+### 🚧 Build
+
+* added more utility functions ([607c905](https://github.com/Bankole2000/validator-utils/commits/607c9059f45d2a472137e73fe8f63aefb3675b94))
+
 ### [0.0.5](https://github.com/Bankole2000/validator-utils/compare/v0.0.4...v0.0.5) (2024-05-10)
 
 
