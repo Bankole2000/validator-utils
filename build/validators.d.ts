@@ -75,7 +75,7 @@ export declare const onlyOneTruthy: (...a: any[]) => boolean;
 * @param {String} mimetype - file extention to be validated
 * @returns {Boolean}
 */
-export declare const isValidImage: (mimetype: string) => string | false;
+export declare const isValidImage: (mimetype: string) => string | boolean;
 /**
 * @desc Checks if a timestamp is over a certain number of days from now
 * @param {String} date - date to check the number of days from
@@ -96,12 +96,21 @@ export declare const isOfAge: (dateOfBirth: string, requiredAge: number) => bool
 * @param {Object} data - Object with the properties you wish to extract from
 * @returns {Object}
 */
-export declare const sanitizeData: (fields: string[], data: any) => {
-    [key: string]: any;
-};
+export declare const sanitizeData: <T extends Record<string, any> = any>(fields: string[], data: Partial<T>) => Partial<T>;
 /**
 * @desc Checks if a string is a valid 24 char hexString (like MongoDB ID)
 * @param {String} idLike - string to validate as hexString 24 char
 * @returns {Boolean}
 */
 export declare const isValidObjectId: (idLike: string) => boolean;
+/**
+* @desc Gets object keys in the types that they are in, giving a list of properties
+* @param {Object} obj - Object to get keys from
+* @returns {[String]}
+*/
+export declare const getObjectKeys: <T extends {}>(obj: T) => Array<keyof T>;
+export declare const sortObjectArrayByFunction: <T extends {}>(array: T[], compareFn?: (a: T, b: T) => number) => T[];
+export declare const sortArray: <K extends Record<string, any>>(arr: K[], compareFn: (a: K, b: K) => number) => K[];
+export declare const sortByNumericalProperty: <K extends string, T extends Record<K, number>>(items: T[], dateFieldName: K, reverse?: boolean) => T[];
+export declare const sortByStringProperty: <K extends string, T extends Record<K, string>>(items: T[], stringProperty: K, reverse?: boolean) => T[];
+export declare const arraysEquals: <K extends Record<string, any>>(a: K[], b: K[], compareFn: (a: K, b: K) => number) => boolean;

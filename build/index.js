@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isValidObjectId = exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
+exports.sortArray = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
 var validators_1 = require("./validators");
 Object.defineProperty(exports, "isOfAge", { enumerable: true, get: function () { return validators_1.isOfAge; } });
 Object.defineProperty(exports, "isBoolean", { enumerable: true, get: function () { return validators_1.isBoolean; } });
@@ -19,3 +19,9 @@ Object.defineProperty(exports, "onlyOneTruthy", { enumerable: true, get: functio
 Object.defineProperty(exports, "sanitizeData", { enumerable: true, get: function () { return validators_1.sanitizeData; } });
 Object.defineProperty(exports, "stripHTML", { enumerable: true, get: function () { return validators_1.stripHTML; } });
 Object.defineProperty(exports, "isValidObjectId", { enumerable: true, get: function () { return validators_1.isValidObjectId; } });
+Object.defineProperty(exports, "getObjectKeys", { enumerable: true, get: function () { return validators_1.getObjectKeys; } });
+Object.defineProperty(exports, "sortObjectArrayByFunction", { enumerable: true, get: function () { return validators_1.sortObjectArrayByFunction; } });
+Object.defineProperty(exports, "sortByNumericalProperty", { enumerable: true, get: function () { return validators_1.sortByNumericalProperty; } });
+Object.defineProperty(exports, "sortByStringProperty", { enumerable: true, get: function () { return validators_1.sortByStringProperty; } });
+Object.defineProperty(exports, "arraysEquals", { enumerable: true, get: function () { return validators_1.arraysEquals; } });
+Object.defineProperty(exports, "sortArray", { enumerable: true, get: function () { return validators_1.sortArray; } });

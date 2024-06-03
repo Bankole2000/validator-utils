@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
+exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
 const htmlRegex = /<\/?[^>]+(>|$)/gi;
 const emailRegex = /^[a-z]+(_|\.)?[a-z0-9]*@[a-z]+\.[a-z]{2,}$/i;
 const userNameRegex = /^[a-z0-9_]+$/;
@@ -185,3 +185,29 @@ exports.sanitizeData = sanitizeData;
 */
 const isValidObjectId = (idLike) => hexStringRegex.test(idLike);
 exports.isValidObjectId = isValidObjectId;
+/**
+* @desc Gets object keys in the types that they are in, giving a list of properties
+* @param {Object} obj - Object to get keys from
+* @returns {[String]}
+*/
+const getObjectKeys = (obj) => Object.keys(obj);
+exports.getObjectKeys = getObjectKeys;
+const sortObjectArrayByFunction = (array, compareFn) => {
+    return array.slice().sort(compareFn);
+};
+exports.sortObjectArrayByFunction = sortObjectArrayByFunction;
+const sortArray = (arr, compareFn) => arr.sort(compareFn);
+exports.sortArray = sortArray;
+const sortByNumericalProperty = (items, dateFieldName, reverse = false) => items.sort((a, b) => reverse ? b[dateFieldName] - a[dateFieldName] : a[dateFieldName] - b[dateFieldName]);
+exports.sortByNumericalProperty = sortByNumericalProperty;
+const sortByStringProperty = (items, stringProperty, reverse = false) => items.sort((a, b) => reverse ? b[stringProperty].localeCompare(a[stringProperty]) : a[stringProperty].localeCompare(b[stringProperty]));
+exports.sortByStringProperty = sortByStringProperty;
+const arraysEquals = (a, b, compareFn) => {
+    a.sort(compareFn);
+    b.sort(compareFn);
+    return (Array.isArray(a) &&
+        Array.isArray(b) &&
+        a.length === b.length &&
+        a.every((val, index) => JSON.stringify(val) === JSON.stringify(b[index])));
+};
+exports.arraysEquals = arraysEquals;
