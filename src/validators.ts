@@ -55,37 +55,37 @@ export const isValidString = (str: string) => (str ? validStringRegex.test(str) 
  * @param {String} str - string to be validated
  * @returns {Boolean}
  */
-export const isValidAlphaNum = (str: string) => (str ? alphaNumRegex.test(str) : false);
+export const isValidAlphaNum = (str: string): boolean => (str ? alphaNumRegex.test(str) : false);
  /**
  * @desc Checks if a string is a valid date
  * @param {String} dateLike - string to be validated
  * @returns {Boolean}
  */
-export const isValidDate = (datelike: string) => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date';
+export const isValidDate = (datelike: string): boolean => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date';
  /**
  * @desc Checks if a value is boolean (true or false) - returns true even if the value is false, as false is also a boolean
  * @param {String} val - value to be validated
  * @returns {Boolean}
  */
-export const isBoolean = (val: any) => Boolean(val) === val;
+export const isBoolean = (val: any): boolean => Boolean(val) === val;
  /**
  * @desc Checks if a string is empty or not
  * @param {String} stringLike - string to be validated
  * @returns {Boolean}
  */
-export const isNotEmpty = (stringLike: string) => validStringRegex.test(stringLike);
+export const isNotEmpty = (stringLike: string): boolean => validStringRegex.test(stringLike);
  /**
  * @desc Checks if an array of boolean object properties have only one true at a time
  * @param {[Object]} Array of boolean objects to be validated
  * @returns {Boolean}
  */
-export const onlyOneTruthy = (...a: any[]) => !!(a.reduce((a, b) => a + !!b, 0) - 1)
+export const onlyOneTruthy = (...a: any[]): boolean => !!(a.reduce((a, b) => a + !!b, 0) - 1)
  /**
  * @desc Checks if a file extension is a valid image
  * @param {String} mimetype - file extention to be validated
  * @returns {Boolean}
  */
-export const isValidImage = (mimetype: string) => {
+export const isValidImage = (mimetype: string): string | boolean => {
   const validMimeTypes: { [key: string]: string } = {
     jpg: 'image/jpg',
     jpeg: 'image/jpeg',
@@ -104,7 +104,7 @@ export const isValidImage = (mimetype: string) => {
  * @param {Number} days - number to check if the date is greater than number of days
  * @returns {Boolean}
  */
-export const isOverDaysOld = (date: string, days: number) => {
+export const isOverDaysOld = (date: string, days: number): boolean => {
   if (!date) return false;
   if (Date.parse(date.toString()) >= Date.now()) return false;
   if (Date.parse(date.toString())) {
@@ -121,7 +121,7 @@ export const isOverDaysOld = (date: string, days: number) => {
  * @param {Number} requiredAge - number to check if the given dateOfBirth is greater than that age
  * @returns {Boolean}
  */
-export const isOfAge = (dateOfBirth: string, requiredAge: number) => {
+export const isOfAge = (dateOfBirth: string, requiredAge: number): boolean => {
   if (!dateOfBirth) return false;
   if (Date.parse(dateOfBirth.toString()) > Date.now()) return false;
   if (Date.parse(dateOfBirth.toString())) {
@@ -138,21 +138,21 @@ export const isOfAge = (dateOfBirth: string, requiredAge: number) => {
  * @param {Object} data - Object with the properties you wish to extract from
  * @returns {Object}
  */
-export const sanitizeData = (fields: string[], data: any) => {
-  const sanitizedData: { [key: string]: any } = {};
+export const sanitizeData = <T extends Record<string, any> = any>(fields: string[], data: Partial<T>): Partial<T> => {
+  const sanitizedData: Partial<T> = {};
   fields.forEach((field) => {
     if (isBoolean(data[field])) {
-      sanitizedData[field] = data[field];
+      sanitizedData[field as keyof T] = data[field];
       return;
     }
     if (typeof(data[field]) === 'number'){
-      sanitizedData[field] = data[field];
+      sanitizedData[field as keyof T] = data[field];
       return;
     }
     if (data[field]) {
-      sanitizedData[field] = data[field];
-      if (isValidDate(data[field])) {
-        sanitizedData[field] = new Date(data[field]);
+      sanitizedData[field as keyof T] = data[field];
+      if (isValidDate(data[field] as string)) {
+        sanitizedData[field as keyof T] = new Date(data[field] as string) as unknown as any;
       }
     }
   });
@@ -163,4 +163,44 @@ export const sanitizeData = (fields: string[], data: any) => {
  * @param {String} idLike - string to validate as hexString 24 char
  * @returns {Boolean}
  */
-export const isValidObjectId = (idLike: string) => hexStringRegex.test(idLike);
+export const isValidObjectId = (idLike: string): boolean => hexStringRegex.test(idLike);
+
+ /**
+ * @desc Gets object keys in the types that they are in, giving a list of properties
+ * @param {Object} obj - Object to get keys from
+ * @returns {[String]}
+ */
+export const getObjectKeys = <T extends {}>(obj: T): Array<keyof T> => Object.keys(obj) as Array<keyof T>;
+
+export const sortObjectArrayByFunction = <T extends {}>(array: T[], compareFn?: (a: T, b: T) => number): T[] => {
+  return array.slice().sort(compareFn);
+}
+
+export const sortArray = <K extends Record<string, any>>(
+  arr: K[], 
+  compareFn: (a: K, b: K) => number
+): K[] => arr.sort(compareFn);
+
+export const sortByNumericalProperty = <K extends string, T extends Record<K, number>>(
+  items: T[],
+  dateFieldName: K,
+  reverse = false,
+) => items.sort((a: T, b: T) => reverse ? b[dateFieldName] - a[dateFieldName] : a[dateFieldName] - b[dateFieldName])
+
+export const sortByStringProperty = <K extends string, T extends Record<K, string>>(
+  items: T[],
+  stringProperty: K,
+  reverse = false,
+) => items.sort((a: T, b: T) => reverse ? b[stringProperty].localeCompare(a[stringProperty]) : a[stringProperty].localeCompare(b[stringProperty]))
+
+
+export const arraysEquals = <K extends Record<string, any>>(a: K[], b: K[], compareFn: (a: K, b: K) => number) => {
+  a.sort(compareFn);
+  b.sort(compareFn);
+  return (
+    Array.isArray(a) &&
+    Array.isArray(b) &&
+    a.length === b.length &&
+    a.every((val, index) => JSON.stringify(val) === JSON.stringify(b[index]))
+  );
+};
