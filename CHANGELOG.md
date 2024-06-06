@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/Bankole2000/validator-utils/compare/v0.0.6...v0.0.7) (2024-06-06)
+
+
+### ✨ Features
+
+* added some validator functions ([6fd2701](https://github.com/Bankole2000/validator-utils/commits/6fd270174ab1a8f0a0990bed6fef804eb3ff2a7f))
+
 ### [0.0.6](https://github.com/Bankole2000/validator-utils/compare/v0.0.5...v0.0.6) (2024-06-03)
 
 
