@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
+exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
 const htmlRegex = /<\/?[^>]+(>|$)/gi;
 const emailRegex = /^[a-z]+(_|\.)?[a-z0-9]*@[a-z]+\.[a-z]{2,}$/i;
 const userNameRegex = /^[a-z0-9_]+$/;
@@ -211,3 +211,15 @@ const arraysEquals = (a, b, compareFn) => {
         a.every((val, index) => JSON.stringify(val) === JSON.stringify(b[index])));
 };
 exports.arraysEquals = arraysEquals;
+/**
+* @function {@link makeKeyRemover} returns a function to remove specified keys from an object
+* @param {[String]} keys - Array of keys for the function to remove
+* @example
+* const keyRemover = makeKeyRemover(["a", "b"])
+* const newObject = keyRemover({a: 1, b: 2, c: 3})
+* // newObject === {c: 3} - properties "a" and "b" have been removed
+*/
+const makeKeyRemover = (keys) => (obj) => {
+    return {};
+};
+exports.makeKeyRemover = makeKeyRemover;

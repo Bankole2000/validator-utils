@@ -114,3 +114,12 @@ export declare const sortArray: <K extends Record<string, any>>(arr: K[], compar
 export declare const sortByNumericalProperty: <K extends string, T extends Record<K, number>>(items: T[], dateFieldName: K, reverse?: boolean) => T[];
 export declare const sortByStringProperty: <K extends string, T extends Record<K, string>>(items: T[], stringProperty: K, reverse?: boolean) => T[];
 export declare const arraysEquals: <K extends Record<string, any>>(a: K[], b: K[], compareFn: (a: K, b: K) => number) => boolean;
+/**
+* @function {@link makeKeyRemover} returns a function to remove specified keys from an object
+* @param {[String]} keys - Array of keys for the function to remove
+* @example
+* const keyRemover = makeKeyRemover(["a", "b"])
+* const newObject = keyRemover({a: 1, b: 2, c: 3})
+* // newObject === {c: 3} - properties "a" and "b" have been removed
+*/
+export declare const makeKeyRemover: <Key extends string>(keys: Key[]) => <Obj>(obj: Obj) => Omit<Obj, Key>;

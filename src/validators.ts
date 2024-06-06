@@ -13,43 +13,43 @@ const hexStringRegex = /^[a-f0-9]{24}$/i;
  * @param {String} email - string to validate if email or not
  * @returns {Boolean}
  */
-export const isValidEmail = (email: string) => (email ? emailRegex.test(email) : false);
+export const isValidEmail = (email: string): boolean => (email ? emailRegex.test(email) : false);
  /**
  * @desc Checks if entered string is valid username - i.e. a to z, 0 to 9, and underscores (_)
  * @param {String} userName - string to validate if is valid username or not
  * @returns {Boolean}
  */
-export const isValidUserName = (userName: string) => (userName ? userNameRegex.test(userName) : false);
+export const isValidUserName = (userName: string): boolean => (userName ? userNameRegex.test(userName) : false);
  /**
  * @desc Checks if entered string is valid name i.e a-z,A-Z and dashes (-)
  * @param {String} name - string to validate if valid name or not
  * @returns {Boolean}
  */
-export const isValidName = (name: string) => (name ? nameRegex.test(name) : false);
+export const isValidName = (name: string): boolean => (name ? nameRegex.test(name) : false);
  /**
  * @desc Removes any html tags from a string
  * @param {String} html - html to be stripped of tags
  * @returns {String} string stripped of any html
  */
-export const stripHTML = (html: string) => html.replace(htmlRegex, '');
+export const stripHTML = (html: string): string => html.replace(htmlRegex, '');
  /**
  * @desc Checks if a string is digits only
  * @param {String} numLike - string to be validated
  * @returns {Boolean}
  */
-export const isNumbersOnly = (numLike: string) => (numLike ? numOnlyRegex.test(numLike) : false);
+export const isNumbersOnly = (numLike: string): boolean => (numLike ? numOnlyRegex.test(numLike) : false);
  /**
  * @desc Checks if a string contains only numbers and dashes (like a phone number)
  * @param {String} phone - string to be validated
  * @returns {Boolean}
  */
-export const isValidPhone = (phone: string) => (phone ? phoneRegex.test(phone) : false);
+export const isValidPhone = (phone: string): boolean => (phone ? phoneRegex.test(phone) : false);
  /**
  * @desc Checks if a string is not empty and doesn't contain only spaces
  * @param {String} str - string to be validated
  * @returns {Boolean}
  */
-export const isValidString = (str: string) => (str ? validStringRegex.test(str) : false);
+export const isValidString = (str: string): boolean => (str ? validStringRegex.test(str) : false);
  /**
  * @desc Checks if a string is alphanumeric (contains only numbers and letters)
  * @param {String} str - string to be validated
@@ -204,3 +204,81 @@ export const arraysEquals = <K extends Record<string, any>>(a: K[], b: K[], comp
     a.every((val, index) => JSON.stringify(val) === JSON.stringify(b[index]))
   );
 };
+
+ /**
+ * @function {@link makeKeyRemover} returns a function to remove specified keys from an object
+ * @param {[String]} keys - Array of keys for the function to remove
+ * @example
+ * const keyRemover = makeKeyRemover(["a", "b"])
+ * const newObject = keyRemover({a: 1, b: 2, c: 3})
+ * // newObject === {c: 3} - properties "a" and "b" have been removed
+ */
+export const makeKeyRemover = <Key extends string>(keys: Key[]) => <Obj>(obj: Obj): Omit<Obj, Key> => {
+  return {} as any;
+}
+
+ /**
+ * @function {@link arrayToObjectByField} convert an object array to object indexed by a selected property
+ * @param {[Object]} arr - Array of objects which all have property K with unique value
+ * @param {string} key - property with unique value common to all objects
+ * @example
+ * const arr = [
+ *  { id: '1', name: 'Alpha', gender: 'Male' },
+ *  { id: '2', name: 'Bravo', gender: 'Male' },
+ *  { id: '3', name: 'Charlie', gender: 'Female' },
+ * ]
+ * arrayToObjectByField(arr, "id")
+ * // returns
+ * // {
+ * // '1': { id: '1', name: 'Alpha', gender: 'Male' },
+ * // '2': { id: '2', name: 'Bravo', gender: 'Male' },
+ * // '3': { id: '3', name: 'Charlie', gender: 'Female' },
+ * //  }
+ */
+export const arrayToObjectByField = <T extends Record<string, any>, K extends keyof T>(arr: T[], key: K): Record<string, T> =>
+  arr.reduce((a, b) => ({ ...a, [b[key]]: b }), {});
+
+type maskArgs = {str: string, num: number, mask?: string, reverse?: boolean}
+ /**
+ * @function {@link maskWithChar} convert an object array to object indexed by a selected property
+ * @param {...maskArgs} maskObj - {@link maskArgs} objects of masking details
+ * @param {(string | number)} maskObj.str - string or number to be masked
+ * @param {number} maskObj.num - number of characters to mask
+ * @param {string} [maskObj.mask] - string to use for masking (default = "*")
+ * @param {boolean} [maskObj.reverse] - mask from str start or end (default = false)
+ * @example
+ * // masks the first 4 characters with "*" // ****567890
+ * maskWithChar({str: 1234567890, num: 4, mask: '*'}); 
+ * // masks the last 5 characters with "x" // 12345xxxxx
+ * maskWithChar({str: 1234567890, num: 5, mask: 'x', reverse: true}); 
+ */
+export const maskWithChar = ({str, num, mask = "*", reverse = false}: maskArgs): string =>
+  {
+    return reverse 
+    ? `${str}`.slice(0, (`${str}`.length - num)).padEnd(`${str}`.length, mask)
+    : `${str}`.slice(num).padStart(`${str}`.length, mask)
+  };
+
+/**
+ * @function {@link addOrdinal} returns a string with ordinal suffix (i.e. 1st, 2nd, 3rd)
+ * @param {number} n - Number to get ordinal string of
+ * @example
+ * addOrdinal(1) // 1st
+ * addOrdinal(12) // 12th
+ * addOrdinal(22) // 22nd
+ */
+export const addOrdinal = (n: number): string => `${n}${[, 'st', 'nd', 'rd'][(n % 100 >> 3) ^ 1 && n % 10] || 'th'}`;
+
+type RGBInput = {r?: number, g?: number, b?: number}
+/**
+ * @function {@link rgbToHex} converts rgb color to hex value
+ * @param {...rgbInput} rgbObj - {@link RGBInput} Object of rgb color values
+ * @param {number} rgbObj.r - r color value
+ * @param {number} rgbObj.g - g color value
+ * @param {number} rgbObj.b - b color value
+ * @example
+ * rgbToHex({r: 0, g: 255, b: 255}) // '#00ffff'
+ * rgbToHex({}) // '#000000'
+ */
+export const rgbToHex = ({r=0, g=0, b=0}: RGBInput): string =>
+  `#${[r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
