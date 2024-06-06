@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sortArray = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
+exports.rgbToHex = exports.maskWithChar = exports.makeKeyRemover = exports.arrayToObjectByField = exports.addOrdinal = exports.sortArray = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
 var validators_1 = require("./validators");
 Object.defineProperty(exports, "isOfAge", { enumerable: true, get: function () { return validators_1.isOfAge; } });
 Object.defineProperty(exports, "isBoolean", { enumerable: true, get: function () { return validators_1.isBoolean; } });
@@ -25,3 +25,8 @@ Object.defineProperty(exports, "sortByNumericalProperty", { enumerable: true, ge
 Object.defineProperty(exports, "sortByStringProperty", { enumerable: true, get: function () { return validators_1.sortByStringProperty; } });
 Object.defineProperty(exports, "arraysEquals", { enumerable: true, get: function () { return validators_1.arraysEquals; } });
 Object.defineProperty(exports, "sortArray", { enumerable: true, get: function () { return validators_1.sortArray; } });
+Object.defineProperty(exports, "addOrdinal", { enumerable: true, get: function () { return validators_1.addOrdinal; } });
+Object.defineProperty(exports, "arrayToObjectByField", { enumerable: true, get: function () { return validators_1.arrayToObjectByField; } });
+Object.defineProperty(exports, "makeKeyRemover", { enumerable: true, get: function () { return validators_1.makeKeyRemover; } });
+Object.defineProperty(exports, "maskWithChar", { enumerable: true, get: function () { return validators_1.maskWithChar; } });
+Object.defineProperty(exports, "rgbToHex", { enumerable: true, get: function () { return validators_1.rgbToHex; } });

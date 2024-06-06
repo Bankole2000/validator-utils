@@ -21,5 +21,10 @@ export {
   sortByNumericalProperty,
   sortByStringProperty,
   arraysEquals,
-  sortArray
+  sortArray,
+  addOrdinal,
+  arrayToObjectByField,
+  makeKeyRemover,
+  maskWithChar,
+  rgbToHex,
 } from "./validators"

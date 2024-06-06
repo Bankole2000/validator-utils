@@ -123,3 +123,68 @@ export declare const arraysEquals: <K extends Record<string, any>>(a: K[], b: K[
 * // newObject === {c: 3} - properties "a" and "b" have been removed
 */
 export declare const makeKeyRemover: <Key extends string>(keys: Key[]) => <Obj>(obj: Obj) => Omit<Obj, Key>;
+/**
+* @function {@link arrayToObjectByField} convert an object array to object indexed by a selected property
+* @param {[Object]} arr - Array of objects which all have property K with unique value
+* @param {string} key - property with unique value common to all objects
+* @example
+* const arr = [
+*  { id: '1', name: 'Alpha', gender: 'Male' },
+*  { id: '2', name: 'Bravo', gender: 'Male' },
+*  { id: '3', name: 'Charlie', gender: 'Female' },
+* ]
+* arrayToObjectByField(arr, "id")
+* // returns
+* // {
+* // '1': { id: '1', name: 'Alpha', gender: 'Male' },
+* // '2': { id: '2', name: 'Bravo', gender: 'Male' },
+* // '3': { id: '3', name: 'Charlie', gender: 'Female' },
+* //  }
+*/
+export declare const arrayToObjectByField: <T extends Record<string, any>, K extends keyof T>(arr: T[], key: K) => Record<string, T>;
+type maskArgs = {
+    str: string;
+    num: number;
+    mask?: string;
+    reverse?: boolean;
+};
+/**
+* @function {@link maskWithChar} convert an object array to object indexed by a selected property
+* @param {...maskArgs} maskObj - {@link maskArgs} objects of masking details
+* @param {(string | number)} maskObj.str - string or number to be masked
+* @param {number} maskObj.num - number of characters to mask
+* @param {string} [maskObj.mask] - string to use for masking (default = "*")
+* @param {boolean} [maskObj.reverse] - mask from str start or end (default = false)
+* @example
+* // masks the first 4 characters with "*" // ****567890
+* maskWithChar({str: 1234567890, num: 4, mask: '*'});
+* // masks the last 5 characters with "x" // 12345xxxxx
+* maskWithChar({str: 1234567890, num: 5, mask: 'x', reverse: true});
+*/
+export declare const maskWithChar: ({ str, num, mask, reverse }: maskArgs) => string;
+/**
+ * @function {@link addOrdinal} returns a string with ordinal suffix (i.e. 1st, 2nd, 3rd)
+ * @param {number} n - Number to get ordinal string of
+ * @example
+ * addOrdinal(1) // 1st
+ * addOrdinal(12) // 12th
+ * addOrdinal(22) // 22nd
+ */
+export declare const addOrdinal: (n: number) => string;
+type RGBInput = {
+    r?: number;
+    g?: number;
+    b?: number;
+};
+/**
+ * @function {@link rgbToHex} converts rgb color to hex value
+ * @param {...rgbInput} rgbObj - {@link RGBInput} Object of rgb color values
+ * @param {number} rgbObj.r - r color value
+ * @param {number} rgbObj.g - g color value
+ * @param {number} rgbObj.b - b color value
+ * @example
+ * rgbToHex({r: 0, g: 255, b: 255}) // '#00ffff'
+ * rgbToHex({}) // '#000000'
+ */
+export declare const rgbToHex: ({ r, g, b }: RGBInput) => string;
+export {};

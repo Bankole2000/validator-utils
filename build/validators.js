@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
+exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
 const htmlRegex = /<\/?[^>]+(>|$)/gi;
 const emailRegex = /^[a-z]+(_|\.)?[a-z0-9]*@[a-z]+\.[a-z]{2,}$/i;
 const userNameRegex = /^[a-z0-9_]+$/;
@@ -223,3 +223,64 @@ const makeKeyRemover = (keys) => (obj) => {
     return {};
 };
 exports.makeKeyRemover = makeKeyRemover;
+/**
+* @function {@link arrayToObjectByField} convert an object array to object indexed by a selected property
+* @param {[Object]} arr - Array of objects which all have property K with unique value
+* @param {string} key - property with unique value common to all objects
+* @example
+* const arr = [
+*  { id: '1', name: 'Alpha', gender: 'Male' },
+*  { id: '2', name: 'Bravo', gender: 'Male' },
+*  { id: '3', name: 'Charlie', gender: 'Female' },
+* ]
+* arrayToObjectByField(arr, "id")
+* // returns
+* // {
+* // '1': { id: '1', name: 'Alpha', gender: 'Male' },
+* // '2': { id: '2', name: 'Bravo', gender: 'Male' },
+* // '3': { id: '3', name: 'Charlie', gender: 'Female' },
+* //  }
+*/
+const arrayToObjectByField = (arr, key) => arr.reduce((a, b) => (Object.assign(Object.assign({}, a), { [b[key]]: b })), {});
+exports.arrayToObjectByField = arrayToObjectByField;
+/**
+* @function {@link maskWithChar} convert an object array to object indexed by a selected property
+* @param {...maskArgs} maskObj - {@link maskArgs} objects of masking details
+* @param {(string | number)} maskObj.str - string or number to be masked
+* @param {number} maskObj.num - number of characters to mask
+* @param {string} [maskObj.mask] - string to use for masking (default = "*")
+* @param {boolean} [maskObj.reverse] - mask from str start or end (default = false)
+* @example
+* // masks the first 4 characters with "*" // ****567890
+* maskWithChar({str: 1234567890, num: 4, mask: '*'});
+* // masks the last 5 characters with "x" // 12345xxxxx
+* maskWithChar({str: 1234567890, num: 5, mask: 'x', reverse: true});
+*/
+const maskWithChar = ({ str, num, mask = "*", reverse = false }) => {
+    return reverse
+        ? `${str}`.slice(0, (`${str}`.length - num)).padEnd(`${str}`.length, mask)
+        : `${str}`.slice(num).padStart(`${str}`.length, mask);
+};
+exports.maskWithChar = maskWithChar;
+/**
+ * @function {@link addOrdinal} returns a string with ordinal suffix (i.e. 1st, 2nd, 3rd)
+ * @param {number} n - Number to get ordinal string of
+ * @example
+ * addOrdinal(1) // 1st
+ * addOrdinal(12) // 12th
+ * addOrdinal(22) // 22nd
+ */
+const addOrdinal = (n) => `${n}${[, 'st', 'nd', 'rd'][(n % 100 >> 3) ^ 1 && n % 10] || 'th'}`;
+exports.addOrdinal = addOrdinal;
+/**
+ * @function {@link rgbToHex} converts rgb color to hex value
+ * @param {...rgbInput} rgbObj - {@link RGBInput} Object of rgb color values
+ * @param {number} rgbObj.r - r color value
+ * @param {number} rgbObj.g - g color value
+ * @param {number} rgbObj.b - b color value
+ * @example
+ * rgbToHex({r: 0, g: 255, b: 255}) // '#00ffff'
+ * rgbToHex({}) // '#000000'
+ */
+const rgbToHex = ({ r = 0, g = 0, b = 0 }) => `#${[r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+exports.rgbToHex = rgbToHex;
