@@ -57,11 +57,24 @@ export const isValidString = (str: string): boolean => (str ? validStringRegex.t
  */
 export const isValidAlphaNum = (str: string): boolean => (str ? alphaNumRegex.test(str) : false);
  /**
+ * @desc Checks if a string is a valid url
+ * @param {String} urlLike - string to be validated
+ * @returns {Boolean}
+ */
+export const isValidUrl = (urlLike: string): boolean => {
+  try {
+    new URL(urlLike)
+    return true
+  } catch (error: any) {
+    return false
+  }
+}
+ /**
  * @desc Checks if a string is a valid date
  * @param {String} dateLike - string to be validated
  * @returns {Boolean}
  */
-export const isValidDate = (datelike: string): boolean => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date';
+export const isValidDate = (datelike: string): boolean => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date' && !isValidUrl(datelike);
  /**
  * @desc Checks if a value is boolean (true or false) - returns true even if the value is false, as false is also a boolean
  * @param {String} val - value to be validated

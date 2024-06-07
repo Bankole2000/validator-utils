@@ -5,6 +5,7 @@ export {
   isNumbersOnly,
   isOverDaysOld,
   isValidAlphaNum,
+  isValidUrl,
   isValidDate,
   isValidEmail,
   isValidImage,

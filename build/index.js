@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rgbToHex = exports.maskWithChar = exports.makeKeyRemover = exports.arrayToObjectByField = exports.addOrdinal = exports.sortArray = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
+exports.rgbToHex = exports.maskWithChar = exports.makeKeyRemover = exports.arrayToObjectByField = exports.addOrdinal = exports.sortArray = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.stripHTML = exports.sanitizeData = exports.onlyOneTruthy = exports.isValidUserName = exports.isValidString = exports.isValidPhone = exports.isValidName = exports.isValidImage = exports.isValidEmail = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isOverDaysOld = exports.isNumbersOnly = exports.isNotEmpty = exports.isBoolean = exports.isOfAge = void 0;
 var validators_1 = require("./validators");
 Object.defineProperty(exports, "isOfAge", { enumerable: true, get: function () { return validators_1.isOfAge; } });
 Object.defineProperty(exports, "isBoolean", { enumerable: true, get: function () { return validators_1.isBoolean; } });
@@ -8,6 +8,7 @@ Object.defineProperty(exports, "isNotEmpty", { enumerable: true, get: function (
 Object.defineProperty(exports, "isNumbersOnly", { enumerable: true, get: function () { return validators_1.isNumbersOnly; } });
 Object.defineProperty(exports, "isOverDaysOld", { enumerable: true, get: function () { return validators_1.isOverDaysOld; } });
 Object.defineProperty(exports, "isValidAlphaNum", { enumerable: true, get: function () { return validators_1.isValidAlphaNum; } });
+Object.defineProperty(exports, "isValidUrl", { enumerable: true, get: function () { return validators_1.isValidUrl; } });
 Object.defineProperty(exports, "isValidDate", { enumerable: true, get: function () { return validators_1.isValidDate; } });
 Object.defineProperty(exports, "isValidEmail", { enumerable: true, get: function () { return validators_1.isValidEmail; } });
 Object.defineProperty(exports, "isValidImage", { enumerable: true, get: function () { return validators_1.isValidImage; } });

@@ -47,6 +47,12 @@ export declare const isValidString: (str: string) => boolean;
 */
 export declare const isValidAlphaNum: (str: string) => boolean;
 /**
+* @desc Checks if a string is a valid url
+* @param {String} urlLike - string to be validated
+* @returns {Boolean}
+*/
+export declare const isValidUrl: (urlLike: string) => boolean;
+/**
 * @desc Checks if a string is a valid date
 * @param {String} dateLike - string to be validated
 * @returns {Boolean}

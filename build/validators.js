@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
+exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
 const htmlRegex = /<\/?[^>]+(>|$)/gi;
 const emailRegex = /^[a-z]+(_|\.)?[a-z0-9]*@[a-z]+\.[a-z]{2,}$/i;
 const userNameRegex = /^[a-z0-9_]+$/;
@@ -67,11 +67,26 @@ exports.isValidString = isValidString;
 const isValidAlphaNum = (str) => (str ? alphaNumRegex.test(str) : false);
 exports.isValidAlphaNum = isValidAlphaNum;
 /**
+* @desc Checks if a string is a valid url
+* @param {String} urlLike - string to be validated
+* @returns {Boolean}
+*/
+const isValidUrl = (urlLike) => {
+    try {
+        new URL(urlLike);
+        return true;
+    }
+    catch (error) {
+        return false;
+    }
+};
+exports.isValidUrl = isValidUrl;
+/**
 * @desc Checks if a string is a valid date
 * @param {String} dateLike - string to be validated
 * @returns {Boolean}
 */
-const isValidDate = (datelike) => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date';
+const isValidDate = (datelike) => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date' && !(0, exports.isValidUrl)(datelike);
 exports.isValidDate = isValidDate;
 /**
 * @desc Checks if a value is boolean (true or false) - returns true even if the value is false, as false is also a boolean
