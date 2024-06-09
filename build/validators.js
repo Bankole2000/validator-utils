@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
+exports.timeTillFormatter = exports.timeDiffInSecs = exports.dateFormatter = exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
 const htmlRegex = /<\/?[^>]+(>|$)/gi;
 const emailRegex = /^[a-z]+(_|\.)?[a-z0-9]*@[a-z]+\.[a-z]{2,}$/i;
 const userNameRegex = /^[a-z0-9_]+$/;
@@ -235,7 +235,10 @@ exports.arraysEquals = arraysEquals;
 * // newObject === {c: 3} - properties "a" and "b" have been removed
 */
 const makeKeyRemover = (keys) => (obj) => {
-    return {};
+    keys.forEach((k) => {
+        delete obj[k];
+    });
+    return Object.assign({}, obj);
 };
 exports.makeKeyRemover = makeKeyRemover;
 /**
@@ -299,3 +302,89 @@ exports.addOrdinal = addOrdinal;
  */
 const rgbToHex = ({ r = 0, g = 0, b = 0 }) => `#${[r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
 exports.rgbToHex = rgbToHex;
+/**
+ * Utilit function to help format dates
+ * @function {@link dateFormatter} helps format dateTimes
+ * @param {...TDateFormatOptions} dfObj - {@link TDateFormatOptions} Object of dateFormatting options
+ * @param {string} dfObj.dateLike - Date string to be formatted
+ * @param {Intl.LocalesArgument} [dfObj.locales] - {@link Intl.LocalesArgument} format locale (default ['en-US'])
+ * @param {Intl.DateTimeFormatOptions} [dfObj.options] - {@link Intl.DateTimeFormatOptions} formatting options
+ * @example
+ * dateFormatter({dateLike: `${new Date()}`})
+ * // 'Sun, 09 Jun 2024, 02:30 am'
+ */
+const dateFormatter = ({ dateLike, locales = ['en-UK'], options = {
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+    month: 'short',
+    day: '2-digit',
+    weekday: 'short',
+}, }) => {
+    if (!(0, exports.isValidDate)(dateLike))
+        return null;
+    return new Date(dateLike).toLocaleDateString(locales, options);
+};
+exports.dateFormatter = dateFormatter;
+/**
+ * Get time difference between two dates in seconds
+ * @function {@link timeDiffInSecs} get time difference in seconds
+ * @param {string} start - start Date
+ * @param {string} [end] - end Date
+ * @example
+ * const start = String(new Date())
+ * const end = String(new Date(Date.now() + 360000))
+ * timeDiffInSecs(end, start) // 360000
+ * // start is past so diff is +ive, end will count UP away from start
+ * timeDiffInSecs(start, end) // -360000
+ * // end is future so diff is -ive, start will count DOWN to end
+ * Math.abs(timeDiffInSecs(start, end)) // 360000
+ * // return diff as +ve integer regardless of direciton
+ * @returns {number}
+ */
+const timeDiffInSecs = (start, end = String(new Date())) => {
+    if (!(0, exports.isValidDate)(start) || !(0, exports.isValidDate)(end))
+        return 0;
+    return new Date(start).getTime() - new Date(end).getTime();
+};
+exports.timeDiffInSecs = timeDiffInSecs;
+/**
+ * Format time difference in 1wk 2ds 3hrs 4m 5s
+ * @function {@link timeTillFormatter} get time difference in seconds
+ * @param {number} timeDifference - length of time in milliseconds
+ * @param {TTimeFormatOptions} [ttfOptObj] - {@link TTimeFormatOptions} Object
+ * @param {string} [ttfOptObj.wk] - week formatting (default wk | wks)
+ * @param {string} [ttfOptObj.d] - day formatting (default d | ds)
+ * @param {string} [ttfOptObj.hr] - hour formatting (default hr | hrs)
+ * @param {string} [ttfOptObj.min] - minute formatting (default m)
+ * @param {string} [ttfOptObj.sec] - second formatting (default s)
+ * @example
+ * const timeDiff = 300000 // 5 minutes in milliseconds
+ * timeTillFormatter(timeDiff, {}) // 05m 00
+ * timeTillFormatter(timeDiff * 45, {}) // 3hrs 45m 00
+ * @returns {string}
+ */
+const timeTillFormatter = (timeDifference, { wk = 'wk', d = 'day', hr = 'hr', min = 'm', sec = 's' }) => {
+    if (timeDifference <= 0) {
+        return '00:00';
+    }
+    const time = timeDifference / 1000;
+    const weeks = Math.floor(time / (86400 * 7));
+    const days = wk ? Math.floor(time / 86400) % 7 : Math.floor(time / 86400);
+    const hours = d ? Math.floor(time / 3600) % 24 : Math.floor(time / 3600);
+    const minutes = hr ? Math.floor(time / 60) % 60 : Math.floor(time / 60);
+    const seconds = min ? Math.floor(time) % 60 : Math.floor(time);
+    console.log(weeks && wk);
+    const timeString = [
+        weeks && wk ? ` ${weeks}${wk}${weeks > 1 ? 's' : ''}` : null,
+        days && d ? ` ${days}${d}${days > 1 ? 's' : ''}` : null,
+        hours && hr ? ` ${hours}${hr}${hours > 1 ? 's' : ''}` : null,
+        minutes && min ? ` ${minutes >= 10 ? '' : '0'}${minutes}${min}` : ` ${min ? '00' : ''}`,
+        seconds && sec ? ` ${seconds >= 10 ? '' : '0'}${seconds}${sec}` : ` ${sec ? '00' : ''}`,
+    ]
+        .filter(Boolean)
+        .join('');
+    return timeString;
+};
+exports.timeTillFormatter = timeTillFormatter;

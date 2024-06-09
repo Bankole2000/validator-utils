@@ -193,4 +193,62 @@ type RGBInput = {
  * rgbToHex({}) // '#000000'
  */
 export declare const rgbToHex: ({ r, g, b }: RGBInput) => string;
+export type TDateFormatOptions = {
+    dateLike: string;
+    locales?: Intl.LocalesArgument;
+    options?: Intl.DateTimeFormatOptions;
+};
+/**
+ * Utilit function to help format dates
+ * @function {@link dateFormatter} helps format dateTimes
+ * @param {...TDateFormatOptions} dfObj - {@link TDateFormatOptions} Object of dateFormatting options
+ * @param {string} dfObj.dateLike - Date string to be formatted
+ * @param {Intl.LocalesArgument} [dfObj.locales] - {@link Intl.LocalesArgument} format locale (default ['en-US'])
+ * @param {Intl.DateTimeFormatOptions} [dfObj.options] - {@link Intl.DateTimeFormatOptions} formatting options
+ * @example
+ * dateFormatter({dateLike: `${new Date()}`})
+ * // 'Sun, 09 Jun 2024, 02:30 am'
+ */
+export declare const dateFormatter: ({ dateLike, locales, options, }: TDateFormatOptions) => string | null;
+/**
+ * Get time difference between two dates in seconds
+ * @function {@link timeDiffInSecs} get time difference in seconds
+ * @param {string} start - start Date
+ * @param {string} [end] - end Date
+ * @example
+ * const start = String(new Date())
+ * const end = String(new Date(Date.now() + 360000))
+ * timeDiffInSecs(end, start) // 360000
+ * // start is past so diff is +ive, end will count UP away from start
+ * timeDiffInSecs(start, end) // -360000
+ * // end is future so diff is -ive, start will count DOWN to end
+ * Math.abs(timeDiffInSecs(start, end)) // 360000
+ * // return diff as +ve integer regardless of direciton
+ * @returns {number}
+ */
+export declare const timeDiffInSecs: (start: string, end?: string) => number;
+export type TTimeFormatOptions = {
+    wk?: string | null;
+    d?: string | null;
+    hr?: string | null;
+    min?: string | null;
+    sec?: string | null;
+};
+/**
+ * Format time difference in 1wk 2ds 3hrs 4m 5s
+ * @function {@link timeTillFormatter} get time difference in seconds
+ * @param {number} timeDifference - length of time in milliseconds
+ * @param {TTimeFormatOptions} [ttfOptObj] - {@link TTimeFormatOptions} Object
+ * @param {string} [ttfOptObj.wk] - week formatting (default wk | wks)
+ * @param {string} [ttfOptObj.d] - day formatting (default d | ds)
+ * @param {string} [ttfOptObj.hr] - hour formatting (default hr | hrs)
+ * @param {string} [ttfOptObj.min] - minute formatting (default m)
+ * @param {string} [ttfOptObj.sec] - second formatting (default s)
+ * @example
+ * const timeDiff = 300000 // 5 minutes in milliseconds
+ * timeTillFormatter(timeDiff, {}) // 05m 00
+ * timeTillFormatter(timeDiff * 45, {}) // 3hrs 45m 00
+ * @returns {string}
+ */
+export declare const timeTillFormatter: (timeDifference: number, { wk, d, hr, min, sec }: TTimeFormatOptions) => string;
 export {};
