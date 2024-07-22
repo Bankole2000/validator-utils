@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.timeTillFormatter = exports.timeDiffInSecs = exports.dateFormatter = exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
+exports.TIME_IN_SECONDS = exports.MILLISECONDS = exports.timeTillFormatter = exports.timeDiffInSecs = exports.dateFormatter = exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
 const htmlRegex = /<\/?[^>]+(>|$)/gi;
 const emailRegex = /^[a-z]+(_|\.)?[a-z0-9]*@[a-z]+\.[a-z]{2,}$/i;
 const userNameRegex = /^[a-z0-9_]+$/;
@@ -86,7 +86,7 @@ exports.isValidUrl = isValidUrl;
 * @param {String} dateLike - string to be validated
 * @returns {Boolean}
 */
-const isValidDate = (datelike) => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date' && !(0, exports.isValidUrl)(datelike);
+const isValidDate = (datelike) => new Date(datelike) instanceof Date && !Number.isNaN(datelike) && typeof datelike !== 'boolean' && new Date(datelike).toString() !== 'Invalid Date' && !(0, exports.isValidUrl)(datelike) && numOnlyRegex.test(JSON.stringify(datelike).charAt(1));
 exports.isValidDate = isValidDate;
 /**
 * @desc Checks if a value is boolean (true or false) - returns true even if the value is false, as false is also a boolean
@@ -388,3 +388,39 @@ const timeTillFormatter = (timeDifference, { wk = 'wk', d = 'day', hr = 'hr', mi
     return timeString;
 };
 exports.timeTillFormatter = timeTillFormatter;
+const seconds = 1;
+const minutes = 60 * seconds;
+const hours = 60 * minutes;
+const days = 24 * hours;
+const weeks = 7 * days;
+const months = 30 * days;
+const years = 52 * weeks;
+exports.MILLISECONDS = 1000;
+exports.TIME_IN_SECONDS = {
+    s: seconds,
+    sec: seconds,
+    secs: seconds,
+    second: seconds,
+    seconds,
+    m: minutes,
+    min: minutes,
+    mins: minutes,
+    minute: minutes,
+    minutes,
+    h: hours,
+    hr: hours,
+    hrs: hours,
+    hour: hours,
+    hours,
+    d: days,
+    day: days,
+    days,
+    week: weeks,
+    month: months,
+    months,
+    y: years,
+    yr: years,
+    yrs: years,
+    year: years,
+    years,
+};

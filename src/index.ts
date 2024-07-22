@@ -33,4 +33,6 @@ export {
   TTimeFormatOptions,
   timeDiffInSecs,
   timeTillFormatter,
+  MILLISECONDS,
+  TIME_IN_SECONDS
 } from "./validators"

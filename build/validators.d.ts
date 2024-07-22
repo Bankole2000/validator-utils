@@ -251,4 +251,33 @@ export type TTimeFormatOptions = {
  * @returns {string}
  */
 export declare const timeTillFormatter: (timeDifference: number, { wk, d, hr, min, sec }: TTimeFormatOptions) => string;
+export declare const MILLISECONDS: 1000;
+export declare const TIME_IN_SECONDS: {
+    readonly s: 1;
+    readonly sec: 1;
+    readonly secs: 1;
+    readonly second: 1;
+    readonly seconds: 1;
+    readonly m: number;
+    readonly min: number;
+    readonly mins: number;
+    readonly minute: number;
+    readonly minutes: number;
+    readonly h: number;
+    readonly hr: number;
+    readonly hrs: number;
+    readonly hour: number;
+    readonly hours: number;
+    readonly d: number;
+    readonly day: number;
+    readonly days: number;
+    readonly week: number;
+    readonly month: number;
+    readonly months: number;
+    readonly y: number;
+    readonly yr: number;
+    readonly yrs: number;
+    readonly year: number;
+    readonly years: number;
+};
 export {};
