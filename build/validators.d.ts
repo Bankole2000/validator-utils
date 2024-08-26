@@ -100,9 +100,10 @@ export declare const isOfAge: (dateOfBirth: string, requiredAge: number) => bool
 * @desc Extracts properties from an object and returns a new object with extracted properties
 * @param {[String]} fields[] - properties you wish to extract
 * @param {Object} data - Object with the properties you wish to extract from
+* @param {Boolean} [allowNull] - allow `null` values from source data (default is false)
 * @returns {Object}
 */
-export declare const sanitizeData: <T extends Record<string, any> = any>(fields: string[], data: Partial<T>) => Partial<T>;
+export declare const sanitizeData: <T extends Record<string, any> = any>(fields: string[], data: Partial<T>, allowNull?: boolean) => Partial<T>;
 /**
 * @desc Checks if a string is a valid 24 char hexString (like MongoDB ID)
 * @param {String} idLike - string to validate as hexString 24 char
@@ -252,32 +253,84 @@ export type TTimeFormatOptions = {
  */
 export declare const timeTillFormatter: (timeDifference: number, { wk, d, hr, min, sec }: TTimeFormatOptions) => string;
 export declare const MILLISECONDS: 1000;
-export declare const TIME_IN_SECONDS: {
-    readonly s: 1;
-    readonly sec: 1;
-    readonly secs: 1;
-    readonly second: 1;
-    readonly seconds: 1;
-    readonly m: number;
-    readonly min: number;
-    readonly mins: number;
-    readonly minute: number;
-    readonly minutes: number;
-    readonly h: number;
-    readonly hr: number;
-    readonly hrs: number;
-    readonly hour: number;
-    readonly hours: number;
-    readonly d: number;
-    readonly day: number;
-    readonly days: number;
-    readonly week: number;
-    readonly month: number;
-    readonly months: number;
-    readonly y: number;
-    readonly yr: number;
-    readonly yrs: number;
-    readonly year: number;
-    readonly years: number;
+/**
+ * Readonly Hash of time periods in seconds
+ * @object {@link TIME_PERIOD} - Time Periods in Seconds
+ * @example
+ * // get 2 days in seconds
+ * const twoDays = 2 * TIME_PERIOD.DAY // 172800
+ * // get 1 hour in seconds
+ * const oneHour = TIME_PERIOD.HOUR // 3600
+ * // get 5 minutes in milliseconds
+ * const fiveMinutesInMilliseconds =
+ *   5 * TIME_PERIOD.MINUTE * MILLISECONDS
+ * // returns 300000 milliseconds
+ */
+export declare const TIME_PERIOD: {
+    readonly SECOND: 1;
+    readonly MINUTE: number;
+    readonly HOUR: number;
+    readonly DAY: number;
+    readonly WEEK: number;
+    readonly MONTH: number;
+    readonly YEAR: number;
 };
+export type TimePeriodKey = keyof typeof TIME_PERIOD;
+/**
+ * Readonly Hash of time periods in words
+ * @object {@link WORD_TO_TIME_PERIOD} - Word to Time Period reference
+ * @example
+ * // calculate day time period from the word 'days'
+ * const period = WORD_TO_TIME_PERIOD['days']
+ * // 'DAY'
+ * const inSeconds = TIME_PERIOD[period]
+ * // 86400
+ * const periodInMS = inSeconds * MILLISECONDS
+ * // 86400000
+ * // calculate 2 minutes in milliseconds
+ * const twoMinutesInMS =
+ *   2 * TIME_PERIOD[WORD_TO_TIME_PERIOD['minutes']] * MILLISECONDS
+ * // 120000
+ */
+export declare const WORD_TO_TIME_PERIOD: {
+    readonly s: "SECOND";
+    readonly sec: "SECOND";
+    readonly secs: "SECOND";
+    readonly second: "SECOND";
+    readonly seconds: "SECOND";
+    readonly m: "MINUTE";
+    readonly min: "MINUTE";
+    readonly mins: "MINUTE";
+    readonly minute: "MINUTE";
+    readonly minutes: "MINUTE";
+    readonly h: "HOUR";
+    readonly hr: "HOUR";
+    readonly hrs: "HOUR";
+    readonly hour: "HOUR";
+    readonly hours: "HOUR";
+    readonly d: "DAY";
+    readonly dy: "DAY";
+    readonly dys: "DAY";
+    readonly day: "DAY";
+    readonly days: "DAY";
+    readonly w: "WEEK";
+    readonly wk: "WEEK";
+    readonly wks: "WEEK";
+    readonly week: "WEEK";
+    readonly weeks: "WEEK";
+    readonly mo: "MONTH";
+    readonly mos: "MONTH";
+    readonly mth: "MONTH";
+    readonly mths: "MONTH";
+    readonly mnth: "MONTH";
+    readonly mnths: "MONTH";
+    readonly month: "MONTH";
+    readonly months: "MONTH";
+    readonly y: "YEAR";
+    readonly yr: "YEAR";
+    readonly yrs: "YEAR";
+    readonly year: "YEAR";
+    readonly years: "YEAR";
+};
+export type WordTimePeriodKey = keyof typeof WORD_TO_TIME_PERIOD;
 export {};

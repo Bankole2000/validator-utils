@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TIME_IN_SECONDS = exports.MILLISECONDS = exports.timeTillFormatter = exports.timeDiffInSecs = exports.dateFormatter = exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
+exports.WORD_TO_TIME_PERIOD = exports.TIME_PERIOD = exports.MILLISECONDS = exports.timeTillFormatter = exports.timeDiffInSecs = exports.dateFormatter = exports.rgbToHex = exports.addOrdinal = exports.maskWithChar = exports.arrayToObjectByField = exports.makeKeyRemover = exports.arraysEquals = exports.sortByStringProperty = exports.sortByNumericalProperty = exports.sortArray = exports.sortObjectArrayByFunction = exports.getObjectKeys = exports.isValidObjectId = exports.sanitizeData = exports.isOfAge = exports.isOverDaysOld = exports.isValidImage = exports.onlyOneTruthy = exports.isNotEmpty = exports.isBoolean = exports.isValidDate = exports.isValidUrl = exports.isValidAlphaNum = exports.isValidString = exports.isValidPhone = exports.isNumbersOnly = exports.stripHTML = exports.isValidName = exports.isValidUserName = exports.isValidEmail = void 0;
 const htmlRegex = /<\/?[^>]+(>|$)/gi;
 const emailRegex = /^[a-z]+(_|\.)?[a-z0-9]*@[a-z]+\.[a-z]{2,}$/i;
 const userNameRegex = /^[a-z0-9_]+$/;
@@ -170,9 +170,10 @@ exports.isOfAge = isOfAge;
 * @desc Extracts properties from an object and returns a new object with extracted properties
 * @param {[String]} fields[] - properties you wish to extract
 * @param {Object} data - Object with the properties you wish to extract from
+* @param {Boolean} [allowNull] - allow `null` values from source data (default is false)
 * @returns {Object}
 */
-const sanitizeData = (fields, data) => {
+const sanitizeData = (fields, data, allowNull = false) => {
     const sanitizedData = {};
     fields.forEach((field) => {
         if ((0, exports.isBoolean)(data[field])) {
@@ -188,6 +189,9 @@ const sanitizeData = (fields, data) => {
             if ((0, exports.isValidDate)(data[field])) {
                 sanitizedData[field] = new Date(data[field]);
             }
+        }
+        if (data[field] === null && allowNull) {
+            sanitizedData[field] = data[field];
         }
     });
     return sanitizedData;
@@ -388,39 +392,89 @@ const timeTillFormatter = (timeDifference, { wk = 'wk', d = 'day', hr = 'hr', mi
     return timeString;
 };
 exports.timeTillFormatter = timeTillFormatter;
-const seconds = 1;
-const minutes = 60 * seconds;
-const hours = 60 * minutes;
-const days = 24 * hours;
-const weeks = 7 * days;
-const months = 30 * days;
-const years = 52 * weeks;
 exports.MILLISECONDS = 1000;
-exports.TIME_IN_SECONDS = {
-    s: seconds,
-    sec: seconds,
-    secs: seconds,
-    second: seconds,
-    seconds,
-    m: minutes,
-    min: minutes,
-    mins: minutes,
-    minute: minutes,
-    minutes,
-    h: hours,
-    hr: hours,
-    hrs: hours,
-    hour: hours,
-    hours,
-    d: days,
-    day: days,
-    days,
-    week: weeks,
-    month: months,
-    months,
-    y: years,
-    yr: years,
-    yrs: years,
-    year: years,
-    years,
+const SECOND = 1;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+const WEEK = 7 * DAY;
+const MONTH = 30 * DAY;
+const YEAR = 365 * DAY;
+/**
+ * Readonly Hash of time periods in seconds
+ * @object {@link TIME_PERIOD} - Time Periods in Seconds
+ * @example
+ * // get 2 days in seconds
+ * const twoDays = 2 * TIME_PERIOD.DAY // 172800
+ * // get 1 hour in seconds
+ * const oneHour = TIME_PERIOD.HOUR // 3600
+ * // get 5 minutes in milliseconds
+ * const fiveMinutesInMilliseconds =
+ *   5 * TIME_PERIOD.MINUTE * MILLISECONDS
+ * // returns 300000 milliseconds
+ */
+exports.TIME_PERIOD = {
+    SECOND,
+    MINUTE,
+    HOUR,
+    DAY,
+    WEEK,
+    MONTH,
+    YEAR
+};
+/**
+ * Readonly Hash of time periods in words
+ * @object {@link WORD_TO_TIME_PERIOD} - Word to Time Period reference
+ * @example
+ * // calculate day time period from the word 'days'
+ * const period = WORD_TO_TIME_PERIOD['days']
+ * // 'DAY'
+ * const inSeconds = TIME_PERIOD[period]
+ * // 86400
+ * const periodInMS = inSeconds * MILLISECONDS
+ * // 86400000
+ * // calculate 2 minutes in milliseconds
+ * const twoMinutesInMS =
+ *   2 * TIME_PERIOD[WORD_TO_TIME_PERIOD['minutes']] * MILLISECONDS
+ * // 120000
+ */
+exports.WORD_TO_TIME_PERIOD = {
+    s: "SECOND",
+    sec: "SECOND",
+    secs: "SECOND",
+    second: "SECOND",
+    seconds: "SECOND",
+    m: "MINUTE",
+    min: "MINUTE",
+    mins: "MINUTE",
+    minute: "MINUTE",
+    minutes: "MINUTE",
+    h: "HOUR",
+    hr: "HOUR",
+    hrs: "HOUR",
+    hour: "HOUR",
+    hours: "HOUR",
+    d: "DAY",
+    dy: "DAY",
+    dys: "DAY",
+    day: "DAY",
+    days: "DAY",
+    w: "WEEK",
+    wk: "WEEK",
+    wks: "WEEK",
+    week: "WEEK",
+    weeks: "WEEK",
+    mo: "MONTH",
+    mos: "MONTH",
+    mth: "MONTH",
+    mths: "MONTH",
+    mnth: "MONTH",
+    mnths: "MONTH",
+    month: "MONTH",
+    months: "MONTH",
+    y: "YEAR",
+    yr: "YEAR",
+    yrs: "YEAR",
+    year: "YEAR",
+    years: "YEAR",
 };
