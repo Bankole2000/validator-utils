@@ -34,5 +34,8 @@ export {
   timeDiffInSecs,
   timeTillFormatter,
   MILLISECONDS,
-  TIME_IN_SECONDS
+  WordTimePeriodKey,
+  WORD_TO_TIME_PERIOD,
+  TIME_PERIOD,
+  TimePeriodKey,
 } from "./validators"
